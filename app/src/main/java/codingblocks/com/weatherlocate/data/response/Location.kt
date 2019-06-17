@@ -1,4 +1,4 @@
-package codingblocks.com.weatherlocate.data
+package codingblocks.com.weatherlocate.data.response
 
 import com.google.gson.annotations.SerializedName
 

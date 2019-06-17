@@ -1,4 +1,4 @@
-package codingblocks.com.weatherlocate.data
+package codingblocks.com.weatherlocate.data.response
 
 data class Condition(
 	val code: Int? = null,
