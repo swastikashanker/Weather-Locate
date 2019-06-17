@@ -1,7 +1,13 @@
-package codingblocks.com.weatherlocate.data.response
+package codingblocks.com.weatherlocate.data.db.entity
 
 import androidx.room.Embedded
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+import codingblocks.com.weatherlocate.data.db.entity.Condition
 import com.google.gson.annotations.SerializedName
+
+const val  CURRENT_WEATHER_ID =0
+@Entity(tableName = "current_weather")
 
 data class Current(
 	@SerializedName("temp_c")
@@ -31,3 +37,7 @@ data class Current(
 	@SerializedName("vis_miles")
 	val visMiles: Double
 )
+{
+	@PrimaryKey(autoGenerate = false)
+	var id :Int = CURRENT_WEATHER_ID
+}
