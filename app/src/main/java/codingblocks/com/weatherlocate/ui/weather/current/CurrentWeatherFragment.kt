@@ -11,7 +11,7 @@ import androidx.lifecycle.Observer
 import codingblocks.com.weatherlocate.R
 import codingblocks.com.weatherlocate.data.network.ApixuWeatherApiService
 import codingblocks.com.weatherlocate.data.network.ConnectivityInterceptorImpl
-import codingblocks.com.weatherlocate.data.network.WeatherNetworkDataSorceImpl
+import codingblocks.com.weatherlocate.data.network.WeatherNetworkDataSourceImpl
 import kotlinx.android.synthetic.main.current_weather_fragment.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -39,7 +39,7 @@ class CurrentWeatherFragment : Fragment() {
 
         val apiService = ApixuWeatherApiService(ConnectivityInterceptorImpl(this.context!!))
 
-        val weatherNetworkDataSorce =WeatherNetworkDataSorceImpl(apiService)
+        val weatherNetworkDataSorce =WeatherNetworkDataSourceImpl(apiService)
         weatherNetworkDataSorce.downloadedCurrentWeather.observe(this, Observer {
             tvCurrent.text= it.toString()
         })

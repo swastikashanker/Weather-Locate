@@ -3,7 +3,7 @@ package codingblocks.com.weatherlocate.data.network
 import androidx.lifecycle.LiveData
 import codingblocks.com.weatherlocate.data.network.response.CurrentWeatherResponse
 
-interface WeatherNetworkDataSorce {
+interface WeatherNetworkDataSource {
 
     val downloadedCurrentWeather : LiveData<CurrentWeatherResponse>
 

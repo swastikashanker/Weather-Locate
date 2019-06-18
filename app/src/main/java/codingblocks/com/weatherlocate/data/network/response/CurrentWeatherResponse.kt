@@ -4,6 +4,6 @@ import codingblocks.com.weatherlocate.data.db.entity.Current
 import codingblocks.com.weatherlocate.data.db.entity.Location
 
 data class CurrentWeatherResponse(
-	val current: Current? = null,
-	val location: Location? = null
+	val current: Current,
+	val location: Location
 )

@@ -6,10 +6,10 @@ import androidx.lifecycle.MutableLiveData
 import codingblocks.com.weatherlocate.data.network.response.CurrentWeatherResponse
 import codingblocks.com.weatherlocate.internal.NoConnectivityException
 
-class WeatherNetworkDataSorceImpl (
+class WeatherNetworkDataSourceImpl (
 
     private val apixuWeatherApiService:ApixuWeatherApiService)
-    : WeatherNetworkDataSorce {
+    : WeatherNetworkDataSource {
 
     private val _downloadedCurrentWeather = MutableLiveData<CurrentWeatherResponse>()
     override val downloadedCurrentWeather: LiveData<CurrentWeatherResponse>
