@@ -38,10 +38,10 @@ class WeatherLocateApplication:Application(),KodeinAware {
 //        bind() from factory { detailDate: LocalDate -> FutureDetailWeatherViewModelFactory(detailDate, instance(), instance()) }
     }
 
-//    override fun onCreate() {
-//        super.onCreate()
-//        AndroidThreeTen.init(this)
+    override fun onCreate() {
+        super.onCreate()
+      AndroidThreeTen.init(this)
 //        PreferenceManager.setDefaultValues(this, R.xml.preferences, false)
-//    }
+   }
 
     }
