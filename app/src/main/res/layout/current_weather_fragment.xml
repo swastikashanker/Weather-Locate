@@ -58,14 +58,19 @@
               android:orientation="vertical"
 >
 
-    <ImageView android:layout_width="100dp" android:layout_height="100dp"
-    android:layout_marginTop="120dp"
-    android:layout_marginLeft="150dp"/>
+    <ImageView android:layout_width="100dp"
+               android:layout_height="100dp"
+    android:layout_marginTop="80dp"
+               android:scaleType="centerCrop"
+    android:layout_marginLeft="130dp"
+
+               android:id="@+id/ivCondition"
+    />
 
 
     <TextView android:layout_width="match_parent"
               android:layout_height="40dp"
-              android:layout_marginTop="50dp"
+              android:layout_marginTop="10dp"
               android:textAlignment="center"
             android:id="@+id/tvConditionText"
             android:text="partly cloudy"
@@ -75,7 +80,7 @@
 
     <LinearLayout android:layout_width="match_parent" android:layout_height="35dp"
                   android:orientation="horizontal"
-    android:layout_marginTop="20dp">
+    android:layout_marginTop="10dp">
         <TextView android:layout_width="0dp" android:layout_height="35dp"
                   android:layout_weight="2"
 
@@ -95,7 +100,7 @@
 
     <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
                   android:orientation="horizontal"
-                  android:layout_marginTop="100dp"
+                  android:layout_marginTop="50dp"
                    app:layout_constraintStart_toStartOf="parent">
 
 

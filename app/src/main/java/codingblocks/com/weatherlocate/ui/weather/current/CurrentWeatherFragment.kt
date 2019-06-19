@@ -6,12 +6,15 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModel
 
 import codingblocks.com.weatherlocate.R
 import codingblocks.com.weatherlocate.data.network.ApixuWeatherApiService
 import codingblocks.com.weatherlocate.data.network.ConnectivityInterceptorImpl
 import codingblocks.com.weatherlocate.data.network.WeatherNetworkDataSourceImpl
+import codingblocks.com.weatherlocate.internal.glide.GlideApp
 import codingblocks.com.weatherlocate.ui.base.ScopedFragment
 import kotlinx.android.synthetic.main.current_weather_fragment.*
 import kotlinx.coroutines.Dispatchers
@@ -70,8 +73,57 @@ class CurrentWeatherFragment : ScopedFragment(),KodeinAware {
         currentWeather.observe(this@CurrentWeatherFragment, Observer {
 
             if(it == null) return@Observer
-            tvCurrent.text=it.toString()
+
+            group_loading.visibility = View.GONE
+            updateLocation("Patna")
+            updateDate()
+            updateTemperature(it.temperature,it.feelsLikeTemperature)
+            updateCondition(it.conditionText)
+            updatePrecipitation(it.precipitationVolume)
+            updateWind(it.windDirection,it.windSpeed)
+
+            GlideApp.with(this@CurrentWeatherFragment)
+                .load("https:${it.conditionIconUrl}")
+                .into(ivCondition)
+
         })
+    }
+
+    private fun updateLocation(location:String){
+        //update loc
+
+        (activity as? AppCompatActivity)?.supportActionBar?.title = location
+    }
+
+    private fun updateDate(){
+        (activity as? AppCompatActivity)?.supportActionBar?.subtitle = "Today"
+
+    }
+
+
+    private fun updateCondition(condition:String){
+        tvConditionText.text = "$condition"
+    }
+    private fun updateTemperature(temperature:Double,tempFeelsLike:Double){
+        val unit=if(viewModel.isMetric)"°C" else "°F"
+        tvTemperature.text="$temperature $unit"
+        tvFeelsLike.text ="$tempFeelsLike $unit"
+
+    }
+
+
+
+
+    private fun updatePrecipitation(precipitation : Double){
+        val unit=if(viewModel.isMetric)"mm" else "in"
+        tvPrecipitation.text="$precipitation $unit"
+
+    }
+
+    private fun updateWind(windDirection:String,windSpeed:Double){
+        val unit=if(viewModel.isMetric)"kph" else "mph"
+        tvWind.text="$windDirection,$windSpeed $unit"
+
     }
 
 
