@@ -1,16 +1,163 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
+<androidx.constraintlayout.widget.ConstraintLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="match_parent" xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:background="@drawable/bg"
         tools:context=".ui.weather.current.CurrentWeatherFragment">
 
-    <TextView
+    <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.5"/>
 
-            android:id="@+id/tvCurrent"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+    <androidx.constraintlayout.widget.Group
+            android:id="@+id/group_loading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            app:constraint_referenced_ids="progressBar_loading, textView_loading"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    <ProgressBar
+            android:id="@+id/progressBar_loading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:indeterminate="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+            android:id="@+id/textView_loading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:text="Loading"
+            android:textStyle="bold"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/progressBar_loading"
+            app:layout_constraintVertical_bias="0.0" />
+
+<LinearLayout android:layout_width="match_parent" android:layout_height="match_parent"
+              android:orientation="vertical"
+>
+
+    <ImageView android:layout_width="100dp" android:layout_height="100dp"
+    android:layout_marginTop="120dp"
+    android:layout_marginLeft="150dp"/>
+
+
+    <TextView android:layout_width="match_parent"
+              android:layout_height="40dp"
+              android:layout_marginTop="50dp"
+              android:textAlignment="center"
+            android:id="@+id/tvConditionText"
+            android:text="partly cloudy"
+              style="@style/TextAppearance.AppCompat.Headline"/>
+
+
+
+    <LinearLayout android:layout_width="match_parent" android:layout_height="35dp"
+                  android:orientation="horizontal"
+    android:layout_marginTop="20dp">
+        <TextView android:layout_width="0dp" android:layout_height="35dp"
+                  android:layout_weight="2"
+
+                  style="@style/TextAppearance.AppCompat.Title"
+                  android:text="Feels Like"
+                  android:textAlignment="center"/>
+        <TextView android:layout_width="0dp" android:layout_height="35dp"
+                  android:layout_weight="1"
+                  style="@style/TextAppearance.AppCompat.Title"
+                  android:id="@+id/tvFeelsLike"
+
+                  android:text="40"
+                  android:textAlignment="center"/>
+
+
+    </LinearLayout>
+
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                  android:orientation="horizontal"
+                  android:layout_marginTop="100dp"
+                   app:layout_constraintStart_toStartOf="parent">
+
+
+            <ImageView android:layout_width="0dp"
+                       android:layout_height="70dp"
+                       android:layout_weight="1"
+                       android:paddingLeft="5dp"
+                       android:paddingRight="5dp"
+                       android:paddingTop="5dp"
+                       android:paddingBottom="5dp"
+                       android:src="@drawable/temp"
+
             />
 
-</FrameLayout>
+        <ImageView android:layout_width="0dp"
+                   android:layout_height="70dp"
+                   android:layout_weight="1"
+                   android:paddingLeft="5dp"
+                   android:paddingRight="5dp"
+                   android:paddingTop="5dp"
+                   android:paddingBottom="5dp"
+                   android:src="@drawable/wind1"/>
+        <ImageView android:layout_width="0dp"
+                   android:layout_height="70dp"
+                   android:layout_weight="1"
+                   android:paddingLeft="5dp"
+                   android:paddingRight="5dp"
+                   android:paddingTop="5dp"
+                   android:paddingBottom="5dp"
+                   android:src="@drawable/prec"/>
+
+    </LinearLayout>
+
+    <LinearLayout android:layout_width="match_parent" android:layout_height="35dp"
+    android:orientation="horizontal">
+        <TextView android:layout_width="0dp" android:layout_height="35dp"
+        android:layout_weight="1"
+                  android:id="@+id/tvTemperature"
+        style="@style/TextAppearance.AppCompat.Title"
+        android:text="40"
+        android:textAlignment="center"/>
+        <TextView android:layout_width="0dp" android:layout_height="35dp"
+                  android:layout_weight="1"
+                  style="@style/TextAppearance.AppCompat.Title"
+                  android:id="@+id/tvWind"
+
+                  android:text="40"
+                  android:textAlignment="center"/>
+        <TextView android:layout_width="0dp" android:layout_height="35dp"
+                  android:layout_weight="1"
+                  style="@style/TextAppearance.AppCompat.Title"
+                  android:id="@+id/tvPrecipitation"
+                  android:text="40"
+                  android:textAlignment="center"/>
+
+    </LinearLayout>
+
+
+
+
+
+
+</LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
