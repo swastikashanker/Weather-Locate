@@ -7,6 +7,7 @@ import codingblocks.com.weatherlocate.data.db.ForecastDatabase
 import codingblocks.com.weatherlocate.data.network.*
 import codingblocks.com.weatherlocate.data.repository.ForecastRepository
 import codingblocks.com.weatherlocate.data.repository.ForecastRepositoryImpl
+import codingblocks.com.weatherlocate.ui.weather.current.CurrentWeatherViewModelFactory
 import com.google.android.gms.location.LocationServices
 import com.jakewharton.threetenabp.AndroidThreeTen
 import org.kodein.di.Kodein
@@ -33,7 +34,7 @@ class WeatherLocateApplication:Application(),KodeinAware {
       //  bind<LocationProvider>() with singleton { LocationProviderImpl(instance(), instance()) }
         bind<ForecastRepository>() with singleton { ForecastRepositoryImpl(instance(), instance() ) }
 //        bind<UnitProvider>() with singleton { UnitProviderImpl(instance()) }
-//        bind() from provider { CurrentWeatherViewModelFactory(instance(), instance()) }
+        bind() from provider { CurrentWeatherViewModelFactory(instance()) }
 //        bind() from provider { FutureListWeatherViewModelFactory(instance(), instance()) }
 //        bind() from factory { detailDate: LocalDate -> FutureDetailWeatherViewModelFactory(detailDate, instance(), instance()) }
     }

@@ -7,6 +7,8 @@ import codingblocks.com.weatherlocate.internal.lazyDef
 
 class CurrentWeatherViewModel(private val forecastRepository: ForecastRepository) : ViewModel() {
 
+
+
     private val unitsystem = Unit.METRIC
 
     val isMetric : Boolean
