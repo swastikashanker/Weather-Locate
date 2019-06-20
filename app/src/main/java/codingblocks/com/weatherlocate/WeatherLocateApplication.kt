@@ -5,6 +5,8 @@ import android.content.Context
 import android.preference.PreferenceManager
 import codingblocks.com.weatherlocate.data.db.ForecastDatabase
 import codingblocks.com.weatherlocate.data.network.*
+import codingblocks.com.weatherlocate.data.provider.UnitProvider
+import codingblocks.com.weatherlocate.data.provider.UnitProviderImpl
 import codingblocks.com.weatherlocate.data.repository.ForecastRepository
 import codingblocks.com.weatherlocate.data.repository.ForecastRepositoryImpl
 import codingblocks.com.weatherlocate.ui.weather.current.CurrentWeatherViewModelFactory
@@ -33,8 +35,8 @@ class WeatherLocateApplication:Application(),KodeinAware {
         bind() from provider { LocationServices.getFusedLocationProviderClient(instance<Context>()) }
       //  bind<LocationProvider>() with singleton { LocationProviderImpl(instance(), instance()) }
         bind<ForecastRepository>() with singleton { ForecastRepositoryImpl(instance(), instance() ) }
-//        bind<UnitProvider>() with singleton { UnitProviderImpl(instance()) }
-        bind() from provider { CurrentWeatherViewModelFactory(instance()) }
+        bind<UnitProvider>() with singleton { UnitProviderImpl(instance()) }
+        bind() from provider { CurrentWeatherViewModelFactory(instance(),instance()) }
 //        bind() from provider { FutureListWeatherViewModelFactory(instance(), instance()) }
 //        bind() from factory { detailDate: LocalDate -> FutureDetailWeatherViewModelFactory(detailDate, instance(), instance()) }
     }
