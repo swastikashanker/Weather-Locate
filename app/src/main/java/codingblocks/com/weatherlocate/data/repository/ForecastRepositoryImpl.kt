@@ -2,6 +2,8 @@ package codingblocks.com.weatherlocate.data.repository
 
 import androidx.lifecycle.LiveData
 import codingblocks.com.weatherlocate.data.db.CurrentDao
+import codingblocks.com.weatherlocate.data.db.entity.Location
+import codingblocks.com.weatherlocate.data.db.unitlocal.LocationDao
 import codingblocks.com.weatherlocate.data.db.unitlocal.UnitSpecificCurrentWeatherEntry
 import codingblocks.com.weatherlocate.data.network.WeatherNetworkDataSource
 import codingblocks.com.weatherlocate.data.network.response.CurrentWeatherResponse
@@ -14,10 +16,16 @@ import java.util.*
 
 class ForecastRepositoryImpl(
     private val currentWeatherDao: CurrentDao,
+    private val locationDao:LocationDao,
     private val weatherNetworkDataSource: WeatherNetworkDataSource
     ):ForecastRepository
 {
-
+    override suspend fun getLocation(): LiveData<Location> {
+        return withContext(Dispatchers.IO){
+            initWeatherData()
+            return@withContext locationDao.getLocation()
+        }
+    }
 
 
     init {
@@ -46,8 +54,18 @@ class ForecastRepositoryImpl(
 
     private suspend fun initWeatherData(){
 
-        if(isFetchneeded(ZonedDateTime.now().minusHours(1)))
+        val lastWeatherLocation=locationDao.getLocation().value
+
+
+        if(lastWeatherLocation==null){
             fetchcurrent()
+            return
+        }
+
+            if (isFetchneeded(lastWeatherLocation.zonedDateTime))
+                fetchcurrent()
+            return
+
 
 
 
@@ -69,7 +87,7 @@ class ForecastRepositoryImpl(
 
         GlobalScope.launch(Dispatchers.IO) {
             currentWeatherDao.insert(fetchedWeather!!.current)
-
+            locationDao.insert(fetchedWeather.location)
 
 
 
