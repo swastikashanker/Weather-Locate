@@ -23,5 +23,9 @@ class CurrentWeatherViewModel(private val forecastRepository: ForecastRepository
 
     }
 
+  val location by lazyDef{
+    forecastRepository.getLocation()
+  }
+
 
 }

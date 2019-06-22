@@ -5,6 +5,8 @@ import android.content.Context
 import android.preference.PreferenceManager
 import codingblocks.com.weatherlocate.data.db.ForecastDatabase
 import codingblocks.com.weatherlocate.data.network.*
+import codingblocks.com.weatherlocate.data.provider.LocationProvider
+import codingblocks.com.weatherlocate.data.provider.LocationProviderImpl
 import codingblocks.com.weatherlocate.data.provider.UnitProvider
 import codingblocks.com.weatherlocate.data.provider.UnitProviderImpl
 import codingblocks.com.weatherlocate.data.repository.ForecastRepository
@@ -28,13 +30,13 @@ class WeatherLocateApplication:Application(),KodeinAware {
         bind() from singleton { ForecastDatabase(instance()) }
         bind() from singleton { instance<ForecastDatabase>().currentWeatherDao() }
         //bind() from singleton { instance<ForecastDatabase>().futureWeatherDao() }
-        //bind() from singleton { instance<ForecastDatabase>().weatherLocationDao() }
+        bind() from singleton { instance<ForecastDatabase>().LocationDao() }
         bind<ConnectivityInterceptor>() with singleton { ConnectivityInterceptorImpl(instance()) }
         bind() from singleton { ApixuWeatherApiService(instance()) }
         bind<WeatherNetworkDataSource>() with singleton { WeatherNetworkDataSourceImpl(instance()) }
         bind() from provider { LocationServices.getFusedLocationProviderClient(instance<Context>()) }
-      //  bind<LocationProvider>() with singleton { LocationProviderImpl(instance(), instance()) }
-        bind<ForecastRepository>() with singleton { ForecastRepositoryImpl(instance(), instance() ) }
+        bind<LocationProvider>() with singleton { LocationProviderImpl(instance(),instance() )}
+        bind<ForecastRepository>() with singleton { ForecastRepositoryImpl(instance(), instance() ,instance(),instance() )}
         bind<UnitProvider>() with singleton { UnitProviderImpl(instance()) }
         bind() from provider { CurrentWeatherViewModelFactory(instance(),instance()) }
 //        bind() from provider { FutureListWeatherViewModelFactory(instance(), instance()) }

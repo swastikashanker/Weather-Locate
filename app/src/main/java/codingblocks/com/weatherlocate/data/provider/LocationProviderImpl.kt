@@ -37,7 +37,7 @@ class LocationProviderImpl(
             try {
                 val deviceLocation = getLastDeviceLocation().await()
                     ?: return "${getCustomLocationName()}"
-                return "${deviceLocation.latitude},${deviceLocation.longitude}"
+                //return "${deviceLocation.latitude},${deviceLocation.longitude}"
             } catch (e: LocationPermissionNotGrantedException) {
                 return "${getCustomLocationName()}"
             }
@@ -55,8 +55,8 @@ class LocationProviderImpl(
 
         // Comparing doubles cannot be done with "=="
         val comparisonThreshold = 0.03
-        return Math.abs(deviceLocation.latitude - lastWeatherLocation.lat) > comparisonThreshold &&
-                Math.abs(deviceLocation.longitude - lastWeatherLocation.lon) > comparisonThreshold
+//        return Math.abs(deviceLocation.latitude - lastWeatherLocation.lat) > comparisonThreshold &&
+//                Math.abs(deviceLocation.longitude - lastWeatherLocation.lon) > comparisonThreshold
     }
 
     private fun hasCustomLocationChanged(lastWeatherLocation: Location): Boolean {

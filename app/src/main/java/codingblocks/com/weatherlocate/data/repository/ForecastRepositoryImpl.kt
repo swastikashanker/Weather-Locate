@@ -7,6 +7,7 @@ import codingblocks.com.weatherlocate.data.db.unitlocal.LocationDao
 import codingblocks.com.weatherlocate.data.db.unitlocal.UnitSpecificCurrentWeatherEntry
 import codingblocks.com.weatherlocate.data.network.WeatherNetworkDataSource
 import codingblocks.com.weatherlocate.data.network.response.CurrentWeatherResponse
+import codingblocks.com.weatherlocate.data.provider.LocationProvider
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -17,7 +18,8 @@ import java.util.*
 class ForecastRepositoryImpl(
     private val currentWeatherDao: CurrentDao,
     private val locationDao:LocationDao,
-    private val weatherNetworkDataSource: WeatherNetworkDataSource
+    private val weatherNetworkDataSource: WeatherNetworkDataSource,
+    private val locationprovider:LocationProvider
     ):ForecastRepository
 {
     override suspend fun getLocation(): LiveData<Location> {
@@ -57,7 +59,7 @@ class ForecastRepositoryImpl(
         val lastWeatherLocation=locationDao.getLocation().value
 
 
-        if(lastWeatherLocation==null){
+        if(lastWeatherLocation==null|| locationprovider.hasLocationChanged(lastWeatherLocation)){
             fetchcurrent()
             return
         }
@@ -77,8 +79,7 @@ class ForecastRepositoryImpl(
     }
 
     private suspend fun fetchcurrent(){
-        weatherNetworkDataSource.fetchCurrentWeather(
-            "Patna",
+        weatherNetworkDataSource.fetchCurrentWeather(locationprovider.getPreferredLocationString(),
             Locale.getDefault().language
         )
     }
