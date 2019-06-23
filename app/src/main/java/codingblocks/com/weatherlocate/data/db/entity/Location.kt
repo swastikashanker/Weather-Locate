@@ -15,9 +15,9 @@ data class Location(
 	val country: String? = null,
 
 	val name: String? = null,
-	val lon: Double? = null,
+	val lon: Double,
 	val region: String? = null,
-	val lat: Double? = null,
+	val lat: Double,
 	@SerializedName("tz_id")
      val tzId: String,
     @SerializedName("localtime_epoch")

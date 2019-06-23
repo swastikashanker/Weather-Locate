@@ -8,6 +8,8 @@ import android.content.pm.PackageManager
 import androidx.core.content.ContextCompat
 import codingblocks.com.weatherlocate.data.db.entity.Location
 import codingblocks.com.weatherlocate.internal.LocationPermissionNotGrantedException
+import codingblocks.com.weatherlocate.internal.asDeferred
+import codingblocks.com.weatherlocate.internal.asDeferredAsync
 import com.google.android.gms.location.FusedLocationProviderClient
 
 import kotlinx.coroutines.Deferred
@@ -22,7 +24,7 @@ class LocationProviderImpl(
 
     private val appContext = context.applicationContext
 
-    override suspend fun hasLocationChanged(lastWeatherLocation: Location): Boolean {
+    override suspend fun hasLocationChanged(lastWeatherLocation: codingblocks.com.weatherlocate.data.db.entity.Location): Boolean {
         val deviceLocationChanged = try {
             hasDeviceLocationChanged(lastWeatherLocation)
         } catch (e: LocationPermissionNotGrantedException) {
@@ -35,10 +37,10 @@ class LocationProviderImpl(
     override suspend fun getPreferredLocationString(): String {
         if (isUsingDeviceLocation()) {
             try {
-                val deviceLocation = getLastDeviceLocation().await()
+                val deviceLocation = getLastDeviceLocationAsync().await()
                     ?: return "${getCustomLocationName()}"
-                //return "${deviceLocation.latitude},${deviceLocation.longitude}"
-            } catch (e: LocationPermissionNotGrantedException) {
+                return "${deviceLocation.lat},${deviceLocation.lon}"
+            } catch (e: LocationPermissionNotGrantedException){
                 return "${getCustomLocationName()}"
             }
         }
@@ -50,13 +52,13 @@ class LocationProviderImpl(
         if (!isUsingDeviceLocation())
             return false
 
-        val deviceLocation = getLastDeviceLocation().await()
+        val deviceLocation = getLastDeviceLocationAsync().await()
             ?: return false
 
-        // Comparing doubles cannot be done with "=="
+
         val comparisonThreshold = 0.03
-//        return Math.abs(deviceLocation.latitude - lastWeatherLocation.lat) > comparisonThreshold &&
-//                Math.abs(deviceLocation.longitude - lastWeatherLocation.lon) > comparisonThreshold
+        return Math.abs(deviceLocation.lat - lastWeatherLocation.lat) > comparisonThreshold &&
+                Math.abs(deviceLocation.lon - lastWeatherLocation.lon) > comparisonThreshold
     }
 
     private fun hasCustomLocationChanged(lastWeatherLocation: Location): Boolean {
@@ -76,15 +78,17 @@ class LocationProviderImpl(
     }
 
     @SuppressLint("MissingPermission")
-    private fun getLastDeviceLocation(): Deferred<Location?> {
-        return if (hasLocationPermission())
-            fusedLocationProviderClient.lastLocation.asDeferred()
+    private fun getLastDeviceLocationAsync(): Deferred<codingblocks.com.weatherlocate.data.db.entity.Location> {
+         if (hasLocationPermission())
+        return fusedLocationProviderClient.lastLocation.asDeferredAsync()
+
+
         else
             throw LocationPermissionNotGrantedException()
     }
 
     private fun hasLocationPermission(): Boolean {
         return ContextCompat.checkSelfPermission(appContext,
-            Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED
+            android.Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED
     }
 }
