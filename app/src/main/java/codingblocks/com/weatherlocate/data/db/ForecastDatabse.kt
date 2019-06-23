@@ -5,18 +5,20 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import codingblocks.com.weatherlocate.data.db.entity.Current
+import codingblocks.com.weatherlocate.data.db.entity.Location
 import codingblocks.com.weatherlocate.data.db.unitlocal.LocationDao
 
 
 @Database(
-    entities = [Current::class],
-    version = 1
+    entities = [Current::class,Location::class],
+    version = 1,
+            exportSchema = false
 )
 
 abstract class ForecastDatabase : RoomDatabase() {
     abstract fun currentWeatherDao(): CurrentDao
 //    abstract fun futureWeatherDao(): FutureWeatherDao
-   abstract fun LocationDao(): LocationDao
+   abstract fun locationDao(): LocationDao
 
     companion object {
         @Volatile private var instance: ForecastDatabase? = null

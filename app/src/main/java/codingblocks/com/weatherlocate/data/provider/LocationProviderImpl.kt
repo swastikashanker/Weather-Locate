@@ -8,7 +8,7 @@ import android.content.pm.PackageManager
 import androidx.core.content.ContextCompat
 import codingblocks.com.weatherlocate.data.db.entity.Location
 import codingblocks.com.weatherlocate.internal.LocationPermissionNotGrantedException
-import codingblocks.com.weatherlocate.internal.asDeferred
+
 import codingblocks.com.weatherlocate.internal.asDeferredAsync
 import com.google.android.gms.location.FusedLocationProviderClient
 
@@ -39,7 +39,7 @@ class LocationProviderImpl(
             try {
                 val deviceLocation = getLastDeviceLocationAsync().await()
                     ?: return "${getCustomLocationName()}"
-                return "${deviceLocation.lat},${deviceLocation.lon}"
+                return "${deviceLocation.latitude},${deviceLocation.longitude}"
             } catch (e: LocationPermissionNotGrantedException){
                 return "${getCustomLocationName()}"
             }
@@ -57,8 +57,8 @@ class LocationProviderImpl(
 
 
         val comparisonThreshold = 0.03
-        return Math.abs(deviceLocation.lat - lastWeatherLocation.lat) > comparisonThreshold &&
-                Math.abs(deviceLocation.lon - lastWeatherLocation.lon) > comparisonThreshold
+        return Math.abs(deviceLocation.latitude - lastWeatherLocation.lat) > comparisonThreshold &&
+                Math.abs(deviceLocation.longitude - lastWeatherLocation.lon) > comparisonThreshold
     }
 
     private fun hasCustomLocationChanged(lastWeatherLocation: Location): Boolean {
@@ -78,7 +78,7 @@ class LocationProviderImpl(
     }
 
     @SuppressLint("MissingPermission")
-    private fun getLastDeviceLocationAsync(): Deferred<codingblocks.com.weatherlocate.data.db.entity.Location> {
+    private fun getLastDeviceLocationAsync(): Deferred<android.location.Location?> {
          if (hasLocationPermission())
         return fusedLocationProviderClient.lastLocation.asDeferredAsync()
 

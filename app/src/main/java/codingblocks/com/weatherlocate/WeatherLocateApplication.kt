@@ -30,7 +30,7 @@ class WeatherLocateApplication:Application(),KodeinAware {
         bind() from singleton { ForecastDatabase(instance()) }
         bind() from singleton { instance<ForecastDatabase>().currentWeatherDao() }
         //bind() from singleton { instance<ForecastDatabase>().futureWeatherDao() }
-        bind() from singleton { instance<ForecastDatabase>().LocationDao() }
+        bind() from singleton { instance<ForecastDatabase>().locationDao() }
         bind<ConnectivityInterceptor>() with singleton { ConnectivityInterceptorImpl(instance()) }
         bind() from singleton { ApixuWeatherApiService(instance()) }
         bind<WeatherNetworkDataSource>() with singleton { WeatherNetworkDataSourceImpl(instance()) }
