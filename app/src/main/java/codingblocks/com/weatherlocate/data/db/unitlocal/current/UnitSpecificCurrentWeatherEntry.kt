@@ -1,4 +1,4 @@
-package codingblocks.com.weatherlocate.data.db.unitlocal
+package codingblocks.com.weatherlocate.data.db.unitlocal.current
 
 
 interface UnitSpecificCurrentWeatherEntry {

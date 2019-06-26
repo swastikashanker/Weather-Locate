@@ -2,7 +2,7 @@ package codingblocks.com.weatherlocate.data.repository
 
 import androidx.lifecycle.LiveData
 import codingblocks.com.weatherlocate.data.db.entity.Location
-import codingblocks.com.weatherlocate.data.db.unitlocal.UnitSpecificCurrentWeatherEntry
+import codingblocks.com.weatherlocate.data.db.unitlocal.current.UnitSpecificCurrentWeatherEntry
 
 interface ForecastRepository {
 

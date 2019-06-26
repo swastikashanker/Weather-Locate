@@ -1,11 +1,10 @@
 package codingblocks.com.weatherlocate.data.db
 
 import android.content.Context
-import androidx.room.Database
-import androidx.room.Room
-import androidx.room.RoomDatabase
+import androidx.room.*
 import codingblocks.com.weatherlocate.data.db.entity.Current
 import codingblocks.com.weatherlocate.data.db.entity.Location
+import codingblocks.com.weatherlocate.data.db.unitlocal.FutureWeatherDao
 import codingblocks.com.weatherlocate.data.db.unitlocal.LocationDao
 
 
@@ -15,9 +14,12 @@ import codingblocks.com.weatherlocate.data.db.unitlocal.LocationDao
             exportSchema = false
 )
 
+
+@TypeConverters(LocalDateConverter::class)
+
 abstract class ForecastDatabase : RoomDatabase() {
     abstract fun currentWeatherDao(): CurrentDao
-//    abstract fun futureWeatherDao(): FutureWeatherDao
+   abstract fun futureWeatherDao(): FutureWeatherDao
    abstract fun locationDao(): LocationDao
 
     companion object {

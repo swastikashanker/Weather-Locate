@@ -18,5 +18,13 @@ interface WeatherNetworkDataSource {
 
     )
 
+    suspend fun fetchFutureWeather
+                (
+        location: String,
+        languageCode: String
+
+
+    )
+
 
 }

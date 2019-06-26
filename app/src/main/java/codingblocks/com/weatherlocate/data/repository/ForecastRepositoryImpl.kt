@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import codingblocks.com.weatherlocate.data.db.CurrentDao
 import codingblocks.com.weatherlocate.data.db.entity.Location
 import codingblocks.com.weatherlocate.data.db.unitlocal.LocationDao
-import codingblocks.com.weatherlocate.data.db.unitlocal.UnitSpecificCurrentWeatherEntry
+import codingblocks.com.weatherlocate.data.db.unitlocal.current.UnitSpecificCurrentWeatherEntry
 import codingblocks.com.weatherlocate.data.network.WeatherNetworkDataSource
 import codingblocks.com.weatherlocate.data.network.response.CurrentWeatherResponse
 import codingblocks.com.weatherlocate.data.provider.LocationProvider
