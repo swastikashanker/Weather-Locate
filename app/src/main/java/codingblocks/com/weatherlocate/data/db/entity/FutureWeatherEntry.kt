@@ -10,8 +10,8 @@ import codingblocks.com.weatherlocate.data.db.entity.Day
 
 data class FutureWeatherEntry(
 	@PrimaryKey(autoGenerate = true)
-	val id:Int? = null,
-	val date: String? = null,
+	val id:Int,
+	val date: String,
 	@Embedded
-	val day: Day? = null
+	val day: Day
 )

@@ -3,13 +3,14 @@ package codingblocks.com.weatherlocate.data.db
 import android.content.Context
 import androidx.room.*
 import codingblocks.com.weatherlocate.data.db.entity.Current
+import codingblocks.com.weatherlocate.data.db.entity.FutureWeatherEntry
 import codingblocks.com.weatherlocate.data.db.entity.Location
 import codingblocks.com.weatherlocate.data.db.unitlocal.FutureWeatherDao
 import codingblocks.com.weatherlocate.data.db.unitlocal.LocationDao
 
 
 @Database(
-    entities = [Current::class,Location::class],
+    entities = [Current::class,FutureWeatherEntry::class,Location::class],
     version = 1,
             exportSchema = false
 )
