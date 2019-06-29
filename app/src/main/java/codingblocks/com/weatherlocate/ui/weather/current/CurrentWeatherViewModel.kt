@@ -5,27 +5,20 @@ import codingblocks.com.weatherlocate.data.provider.UnitProvider
 import codingblocks.com.weatherlocate.data.repository.ForecastRepository
 import codingblocks.com.weatherlocate.internal.Unit
 import codingblocks.com.weatherlocate.internal.lazyDef
+import codingblocks.com.weatherlocate.ui.base.WeatherViewModel
 
 class CurrentWeatherViewModel(private val forecastRepository: ForecastRepository,
 
-  unitProvider: UnitProvider) : ViewModel() {
+  unitProvider: UnitProvider) : WeatherViewModel(forecastRepository,unitProvider) {
 
-    private val unitsystem =unitProvider.getUnitSystem()
-
-
-
-    val isMetric : Boolean
-    get() = unitsystem ==Unit.METRIC
 
     val weather by lazyDef {
 
-        forecastRepository.getCurrentWeather(isMetric)
+        forecastRepository.getCurrentWeather(super.isMetricUnit)
 
     }
 
-  val location by lazyDef{
-    forecastRepository.getLocation()
-  }
+
 
 
 }

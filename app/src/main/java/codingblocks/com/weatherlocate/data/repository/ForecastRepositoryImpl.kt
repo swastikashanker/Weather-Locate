@@ -7,6 +7,7 @@ import codingblocks.com.weatherlocate.data.db.unitlocal.FutureWeatherDao
 import codingblocks.com.weatherlocate.data.db.unitlocal.LocationDao
 import codingblocks.com.weatherlocate.data.db.unitlocal.current.UnitSpecificCurrentWeatherEntry
 import codingblocks.com.weatherlocate.data.db.unitlocal.future.UnitSpecificSimpleFutureWeatherEntry
+import codingblocks.com.weatherlocate.data.network.FORECAST_DAYS_COUNT
 import codingblocks.com.weatherlocate.data.network.WeatherNetworkDataSource
 import codingblocks.com.weatherlocate.data.network.response.CurrentWeatherResponse
 import codingblocks.com.weatherlocate.data.network.response.FutureWeatherResponse
@@ -87,22 +88,45 @@ class ForecastRepositoryImpl(
 
 
 
+
+
+
     private suspend fun initWeatherData(){
 
         val lastWeatherLocation=locationDao.getLocationNonLive()
 
 
 
-        if(lastWeatherLocation==null|| locationprovider.hasLocationChanged(lastWeatherLocation)){
+        if(lastWeatherLocation==null|| locationprovider.hasLocationChanged(lastWeatherLocation)) {
             fetchcurrent()
+            fetchFutureWeather()
             return
         }
 
-            if (isFetchneeded(lastWeatherLocation.zonedDateTime))
-                fetchcurrent()
-            return
+        if (isFetchneeded(lastWeatherLocation.zonedDateTime))
+            fetchcurrent()
+        return
+
+        if(isFetchFutureNeeded())
+            fetchFutureWeather()
+        return
 
 
+
+    }
+
+
+    private suspend fun fetchFutureWeather() {
+        weatherNetworkDataSource.fetchFutureWeather(locationprovider.getPreferredLocationString(),
+            Locale.getDefault().language
+        )
+
+    }
+
+    private fun isFetchFutureNeeded():Boolean {
+        val today=LocalDate.now()
+        val futureWeatherCount =futureWeatherDao.countFutureWeather(today)
+        return futureWeatherCount< FORECAST_DAYS_COUNT
 
 
     }
@@ -145,13 +169,17 @@ class ForecastRepositoryImpl(
             deleteOldForecastData()
             val futureWeatherList = fetchedWeather.futureWeatherEntries.entries
 
-
-
             futureWeatherDao.insert(futureWeatherList)
             locationDao.insert(fetchedWeather.location)
         }
 
     }
+
+
+
+
+
+
 
 
 
