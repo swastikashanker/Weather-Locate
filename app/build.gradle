@@ -88,6 +88,10 @@ dependencies {
     // New Material Design
     implementation "com.google.android.material:material:1.0.0"
 
+    dependencies {
+        implementation 'com.android.support:cardview-v7:28.0.0'
+    }
+
 
 
     implementation 'androidx.core:core-ktx:1.0.0-rc02'
